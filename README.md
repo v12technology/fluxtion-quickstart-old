@@ -1,8 +1,9 @@
 # fluxtion-quickstart
-5 minute quick start tutorial to demo fluxtion
+5 minute quick start tutorial to demo fluxtion. This example demonstrates implementing
+a simple unix wc like utility with Fluxtion.
 
 ## Build:
-mvn install -Dfluxtion.exe.path=[path to fluxtion executable]
+mvn install -P fluxtion
 
 ## Run
 java -jar dist\wc.jar dist\sample\norvig.txt example below:
@@ -13,3 +14,7 @@ java -jar dist\wc.jar dist\sample\norvig.txt example below:
      1,549,801 lines
 
     time: 0.098 sec
+
+this shows Fluxtion processing 48.5 million char events in a 0.1 seconds.
+
+## Description
