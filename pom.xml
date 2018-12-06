@@ -63,14 +63,13 @@
                                     <goal>generate</goal>
                                 </goals>
                                 <configuration>
-                                    <fluxtionExePath>${fluxtion.exe.path}</fluxtionExePath>
                                     <configClass>com.fluxtion.sample.wordcount.WordCounter$Builder</configClass>
                                     <packageName>com.fluxtion.sample.wordcount.generated</packageName>
                                     <className>WcProcessor</className>
                                     <supportDirtyFiltering>false</supportDirtyFiltering>
                                     <outputDirectory>src/main/java</outputDirectory>
                                     <!--<logDebug>true</logDebug>-->
-                                    <compileGenerated>false</compileGenerated>
+                                    <!--<compileGenerated>false</compileGenerated>-->
                                     <generateDescription>false</generateDescription>
                                     <!--<http_proxyHost>localhost</http_proxyHost>-->
                                     <!--<http_proxyPort>1090</http_proxyPort>-->
