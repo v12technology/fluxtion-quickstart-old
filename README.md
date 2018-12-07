@@ -19,7 +19,7 @@ c:\tmp\fluxtion-quickstart>java -jar dist\wc.jar dist\sample\norvig.txt
 
 time: 0.098 sec
 ```
-this shows Fluxtion processing **48.5 million char events in a 0.1 seconds.** This includes jvm startup and reading all data from the file, for larger files these costs are amortized and we see **750 million events per second** on a single core.
+This shows a Fluxtion generated Static Event Processor processing **48.5 million char events in a 0.1 seconds.** This includes jvm startup and reading all data from the file, for larger files these costs are amortized and we see **750 million events per second** on a single core.
 
 ### Zero gc
 Fluxtion is careful to allocate no unnecessary objects in the generated solution. The example below demonstrates zero gc in a 5M heap. It is possible to run in 1M heap and a single GC occurs due to class loading in the JVM 
