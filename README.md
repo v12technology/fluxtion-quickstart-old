@@ -33,3 +33,7 @@ time: 0.106 sec
 ```
 
 ## Description
+
+The processing is described [here](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/WordCounter.java)
+
+The Fluxtion generated Static Event Processor is [here](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/generated/WcProcessor.java) 
