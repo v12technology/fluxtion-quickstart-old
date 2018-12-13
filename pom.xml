@@ -11,7 +11,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <fluxtion.maven-plugin.ver>1.5.3-SNAPSHOT</fluxtion.maven-plugin.ver>
+        <fluxtion.maven-plugin.ver>1.5.3</fluxtion.maven-plugin.ver>
         <fluxtion.ver>1.5.3</fluxtion.ver>
         <!--
         replace this property with the value of your install or run:
