@@ -1,1 +1,1 @@
-src/test/resources/*.txt eol=crl
+src/test/resources/*.txt eol=crlf
