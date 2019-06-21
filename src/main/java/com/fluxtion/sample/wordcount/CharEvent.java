@@ -18,7 +18,7 @@
  */
 package com.fluxtion.sample.wordcount;
 
-import com.fluxtion.runtime.event.Event;
+import com.fluxtion.api.event.Event;
 
 /**
  * A Fluxtion Event encapsulating a char. CharEvent is mutable allowing updating
