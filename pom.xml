@@ -11,13 +11,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <fluxtion.maven-plugin.ver>1.5.3</fluxtion.maven-plugin.ver>
-        <fluxtion.ver>1.5.3</fluxtion.ver>
-        <!--
-        replace this property with the value of your install or run:
-        mvn install -Dfluxtion.exe.path=[path to fluxtion executable]
-        -->
-        <fluxtion.exe.path>c:\Program Files\V12\fluxtion-declarative-extended-trial-0.1.16\fluxtion.exe</fluxtion.exe.path>
+        <fluxtion.ver>1.7.21</fluxtion.ver>
         <netbeans.hint.license>gpl30</netbeans.hint.license>
     </properties>
 
@@ -37,14 +31,7 @@
         </developer>
     </developers>
 
-    <repositories>   
-        <repository>
-            <id>fluxtion.repo</id>
-            <url>https://mymavenrepo.com/repo/a6PnK93U9WA0ChAw8D8u/</url>
-        </repository>
-    </repositories> 
-
-    <profiles>     
+    <profiles>
         <profile>
             <id>fluxtion</id>
             <activation>
@@ -55,7 +42,7 @@
                     <plugin>
                         <groupId>com.fluxtion</groupId>
                         <artifactId>fluxtion-maven-plugin</artifactId>
-                        <version>${fluxtion.maven-plugin.ver}</version>
+                        <version>${fluxtion.ver}</version>
                         <executions>
                             <execution>
                                 <id>wc-processor-gen</id>
@@ -105,7 +92,7 @@
             </build>
         </profile>
     </profiles>
-	
+
     <dependencies>
         <dependency>
             <groupId>com.fluxtion</groupId>
