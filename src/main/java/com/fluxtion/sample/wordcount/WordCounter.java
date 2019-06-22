@@ -20,7 +20,7 @@ package com.fluxtion.sample.wordcount;
 
 import com.fluxtion.api.annotations.EventHandler;
 import com.fluxtion.api.annotations.FilterType;
-import com.fluxtion.api.node.SEPConfig;
+import com.fluxtion.builder.node.SEPConfig;
 
 /**
  * Word count logic replicating behaviour of unix wc for bytes:
