@@ -27,7 +27,12 @@ import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 
 /**
- *
+ * Main for the Unix-like wc implemented by Fluxtion, reads a file and streams
+ * each byte as a {@link CharEvent} into the EventProcessor. Can be achieved
+ * with a one-liner:
+ * <p>
+ * {@code com.fluxtion.ext.text.api.util.CharStreamer.stream(File, EventProcessor).stream();}
+ * <p>
  * @author Greg Higgins
  */
 public class Main {
@@ -64,9 +69,8 @@ public class Main {
                     processor.handleEvent(charEvent);
                 }
             }
+            double delta = ((int) (System.nanoTime() - now) / 1_000_000) / 1_000.0;
             processor.tearDown();
-            double delta = ((int)(System.nanoTime() - now)/1_000_000)/1_000.0;
-            System.out.println(processor.result.toString());
             System.out.printf("time: %.3f sec %n", delta);
         } else {
             System.out.println("cannot process file file:" + file.getAbsolutePath());

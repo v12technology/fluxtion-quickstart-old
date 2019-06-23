@@ -85,7 +85,9 @@ public class WcProcessor implements EventHandler, BatchHandler, Lifecycle {
   public void init() {}
 
   @Override
-  public void tearDown() {}
+  public void tearDown() {
+    result.completed();
+  }
 
   @Override
   public void batchPause() {}

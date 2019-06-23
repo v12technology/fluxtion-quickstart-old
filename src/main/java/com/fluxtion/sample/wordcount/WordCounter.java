@@ -20,6 +20,8 @@ package com.fluxtion.sample.wordcount;
 
 import com.fluxtion.api.annotations.EventHandler;
 import com.fluxtion.api.annotations.FilterType;
+import com.fluxtion.api.annotations.TearDown;
+import com.fluxtion.builder.annotation.SepBuilder;
 import com.fluxtion.builder.node.SEPConfig;
 
 /**
@@ -27,11 +29,11 @@ import com.fluxtion.builder.node.SEPConfig;
  * <pre>
  * wc -clw [file]
  * </pre>
- * 
+ *
  * Processes a {@link CharEvent} and keeps a running total of chars, words and
  * lines. Each of the annotated EventHandler methods is an entry point for event
  * processing. Some of the methods supply optional filters.
- * 
+ *
  * @author Greg Higgins
  */
 public class WordCounter {
@@ -73,19 +75,23 @@ public class WordCounter {
         increment = 0;
     }
 
+    @TearDown
+    public void completed(){
+        System.out.println(toString());
+    }
+    
     @Override
     public String toString() {
         int pad = charCount < 1e6 ? 6 : charCount < 1e9 ? 11 : 14;
         return String.format("%," + pad + "d chars%n%," + pad + "d words%n%," + pad + "d lines %n", charCount, wordCount, lineCount);
     }
 
-    public static class Builder extends SEPConfig {
-
-        @Override
-        public void buildConfig() {
-            addPublicNode(new WordCounter(), "result");
-            maxFiltersInline = 15;
-        }
+    @SepBuilder(name = "WcProcessor",
+            packageName = "com.fluxtion.sample.wordcount.generated",
+            outputDir = "src/main/java")
+    public void buildWcSep(SEPConfig cfg) {
+            cfg.addPublicNode(new WordCounter(), "result");
+            cfg.supportDirtyFiltering = false;
     }
 
 }
