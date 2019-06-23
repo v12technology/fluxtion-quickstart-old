@@ -36,3 +36,9 @@ time: 0.106 sec
 The processing is described [here](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/WordCounter.java)
 
 The Fluxtion generated Static Event Processor is [here](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/generated/WcProcessor.java) 
+
+To build the Fluxtion wc from scratch the developer follows the four steps below:
+- Step 1 Create events and processors
+- Step 2 describe the graph 
+- Step 3 Run the Fluxtion maven plugin to generate the event processor
+- Step 4 Integrate the generated processor into the application
