@@ -55,7 +55,8 @@ Fluxtion provides a maven plugin that invokes the Fluxtion event stream compiler
 build process with the scan goal. It is good practice to run Fluxtion within a maven profile and skip tests as part
 of that profile. Maven struggles to load Fluxtion classes for unit testing in a single build.
 
-Fluxtion requires two dependencies to generate a solution, api and generator. Only the api is required at runtime
+Fluxtion requires two dependencies to generate a solution, [api](https://github.com/v12technology/fluxtion/tree/master/api) and 
+[generator](https://github.com/v12technology/fluxtion/tree/master/generator). Only the api is required at runtime
 so the generator is marked as provided scope. This substantially reduces Fluxtion classes at runtime and has zero
 dependencies on external libraries making integration a simple task.
 
