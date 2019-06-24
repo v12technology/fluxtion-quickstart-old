@@ -61,7 +61,14 @@ dependencies on external libraries making integration a simple task.
 
 ```xml
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <!-- ... omitted boilerplate -->
+    
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.me.fluxtion.quickstart</groupId>
+    <artifactId>wordcount</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>my.fluxtion.quickstart :: wordcount</name>
+
 	
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
