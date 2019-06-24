@@ -46,18 +46,18 @@ and a [processor](https://github.com/v12technology/fluxtion-quickstart/blob/mast
 
 ### Detailed description ###
 
-#### Events and processors ####
+#### Step 1 events and processors ####
 
-Define events that the application will process by extending the base class Event. The optional 
-filter value of the event is set to the value of the char. This is the event the application will create and feed into the generated SEP.
+Define an event, CharEvent, that the application will process by extending the Fluxtion base class Event. The optional 
+filter value of the event is set to the value of the char. This is the event the application will create and feed into the Fluxtion generated SEP.
 
-A user written class receives CharEvents and maintains a set of stateful calculations for chars, words and lines. 
+A user written event handler class(WordCounter) receives CharEvents and maintains a set of stateful calculations for chars, words and lines. 
 The ```@EventHandler``` annotation attached to a single argument method, marks the method as an entry point for processing. 
 Some of the methods are marked with a filter value ```@EventHandler(filterId = '\t')``` signifying 
 the  methods are only invoked when the Event and the filter value of the event match.
-
  
-An instance of this class is created and referenced within the generated SEP, the SEP will handle all initialisation, lifecycle and event dispatch for managed nodes. 
+An instance of the handler class is created and referenced within the generated SEP, the SEP 
+will handle all initialisation, lifecycle and event dispatch for managed nodes. 
 
 
 **[CharEvent:](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/CharEvent.java)** Extends [Event](api/src/main/java/com/fluxtion/runtime/event/Event.java), the content of the CharEvent is the char value. An event is the entry point to a processing cycle in the SEP.
