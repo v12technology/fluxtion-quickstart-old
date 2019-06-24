@@ -120,12 +120,10 @@ filter value of the event is set to the value of the char. This is the event the
 A user written event handler class(WordCounter) receives CharEvents and maintains a set of stateful calculations for chars, words and lines. 
 The ```@EventHandler``` annotation attached to a single argument method, marks the method as an entry point for processing. 
 Some of the methods are marked with a filter value ```@EventHandler(filterId = '\t')``` signifying 
-the  methods are only invoked when the Event and the filter value of the event match.
+the methods are only invoked when the Event and the filter value of the event match.
+
+A method is marked with the ```@TtearDown``` annotation and will be invoked when teardown is called on the generated static event processor.
  
-An instance of the handler class is created and referenced within the generated SEP, the SEP 
-will handle all initialisation, lifecycle and event dispatch for managed nodes. 
-
-
 **[CharEvent:](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/CharEvent.java)** 
 
 ```java
@@ -158,9 +156,7 @@ public class CharEvent extends Event{
 }
 ```
 
-
 **[WordCounter:](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/WordCounter.java)** 
-
 
 ```java
 public class WordCounter {
@@ -225,10 +221,11 @@ public class WordCounter {
 ```
 
 ### Step 3 describe graph ###
-Add nodes to a graph at build time in a method annotated with @SepBuilder by creating instances
-and add them to the supplied SepConfig instance. Package name, generated class name and output directory
-are controlled by the annotation parameters. There is no need to declare vertices and edges, Fluxtion
-carries out all the heavy lifting making the coders' life easier. 
+Add nodes to a graph at build time in a method annotated with ```@SepBuilder``` by creating instances
+and adding them to the supplied [SepConfig](https://github.com/v12technology/fluxtion/blob/master/builder/src/main/java/com/fluxtion/builder/node/SEPConfig.java) 
+instance. Package name, generated class name and output directory
+are controlled by annotation parameters. There is no need to declare vertices and edges, Fluxtion
+carries out all the heavy lifting and calculates the graph structure making the coders' life easier. 
 
 The graph description method:
 
@@ -244,13 +241,69 @@ The graph description method:
 
 ### Step 4 generate the static event processor ###
 
-Running the maven build will generate the [event stream processor](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/generated/WcProcessor.java) the application will integrate with.
+Running the maven build will generate the [static event processor](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/generated/WcProcessor.java) 
+(SEP) the application will integrate with.
 
 ```bat
 C:\tmp> mvn install -P fluxtion
 ```
 
+An instance of the handler class is created and referenced within the generated SEP, the SEP 
+will handle all initialisation, lifecycle and event dispatch for managed nodes.
 
+### Step 5 integrate static event processor ###
 
+The generated SEP is the same as any normal java class, it implements the following interfaces:
 
- 
+* [Lifecycle](https://github.com/v12technology/fluxtion/blob/master/api/src/main/java/com/fluxtion/api/lifecycle/Lifecycle.java) - call init and teardown to signify start and stop the processor
+* [EventHandler](https://github.com/v12technology/fluxtion/blob/master/api/src/main/java/com/fluxtion/api/lifecycle/EventHandler.java) - call onEvent with any Event and the SEP will handle all dispatching.
+
+ The develper creates an instance of the SEP, calls init() then pushes events with onEvent and finally shuts down with tearDown().
+
+```java
+
+public class Main {
+
+    public static final int SIZE = 4 * 1024;
+
+    public static void main(String[] args) {
+        File f = new File(args[0]);
+        try {
+            streamFromFile(f);
+        } catch (IOException ex) {
+            System.out.println("error processing file:" + ex.getMessage());
+        }
+    }
+
+    public static WcProcessor streamFromFile(File file) throws FileNotFoundException, IOException {
+        long now = System.nanoTime();
+        WcProcessor processor = new WcProcessor();
+        processor.init();
+        if (file.exists() && file.isFile()) {
+            FileChannel fileChannel = new RandomAccessFile(file, "r").getChannel();
+            long size = file.length();
+            MappedByteBuffer buffer = fileChannel.map(
+                    FileChannel.MapMode.READ_ONLY, 0, size);
+            CharEvent charEvent = new CharEvent(' ');
+
+            final byte[] barray = new byte[SIZE];
+            int nGet;
+            while (buffer.hasRemaining()) {
+                nGet = Math.min(buffer.remaining(), SIZE);
+                buffer.get(barray, 0, nGet);
+                for (int i = 0; i < nGet; i++) {
+                    charEvent.setCharacter((char) barray[i]);
+                    processor.handleEvent(charEvent);
+                }
+            }
+            double delta = ((int) (System.nanoTime() - now) / 1_000_000) / 1_000.0;
+            processor.tearDown();
+            System.out.printf("time: %.3f sec %n", delta);
+        } else {
+            System.out.println("cannot process file file:" + file.getAbsolutePath());
+        }
+        return processor;
+    }
+}
+
+```
