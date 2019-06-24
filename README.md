@@ -49,9 +49,72 @@ annotation. The Fluxtion generator invokes the builder method as part of the mav
 
 ### Detailed description ###
 
-#### Step 1 events and processors ####
+#### Step 1 maven build ####
 
-Define an event, CharEvent, that the application will process by extending the Fluxtion base class Event. The optional 
+Fluxtion provides a maven plugin that invokes the Fluxtion event stream compiler as part of the normal 
+build process with the scan goal. It is good practice to run Fluxtion within a maven profile and skip tests as part
+of that profile. Maven struggles to load Fluxtion classes for unit testing in a single build.
+
+Fluxtion requires two dependencies to generate a solution, api and generator. Only the api is required at runtime
+so the generator is marked as provided scope. This substantially reduces Fluxtion classes at runtime and has zero
+dependencies on external libraries making integration a simple task.
+
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- ... omitted boilerplate -->
+	
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <fluxtion.ver>1.7.23</fluxtion.ver>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>fluxtion</id>
+            <properties>
+                <skipTests>true</skipTests>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.fluxtion</groupId>
+                        <artifactId>fluxtion-maven-plugin</artifactId>
+                        <version>${fluxtion.ver}</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>scan</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.fluxtion</groupId>
+            <artifactId>fluxtion-api</artifactId>
+            <version>${fluxtion.ver}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fluxtion</groupId>
+            <artifactId>generator</artifactId>
+            <version>${fluxtion.ver}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+</project>
+```
+
+
+#### Step 2 events and processors ####
+
+Define an event, CharEvent, that the application will process by extending the Fluxtion base class 
+[Event](api/src/main/java/com/fluxtion/runtime/event/Event.java). The optional 
 filter value of the event is set to the value of the char. This is the event the application will create and feed into the Fluxtion generated SEP.
 
 A user written event handler class(WordCounter) receives CharEvents and maintains a set of stateful calculations for chars, words and lines. 
@@ -63,7 +126,7 @@ An instance of the handler class is created and referenced within the generated 
 will handle all initialisation, lifecycle and event dispatch for managed nodes. 
 
 
-**[CharEvent:](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/CharEvent.java)** Extends [Event](api/src/main/java/com/fluxtion/runtime/event/Event.java), the content of the CharEvent is the char value. An event is the entry point to a processing cycle in the SEP.
+**[CharEvent:](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/CharEvent.java)** 
 
 ```java
 public class CharEvent extends Event{
