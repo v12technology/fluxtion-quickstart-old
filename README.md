@@ -31,14 +31,12 @@ c:\tmp\fluxtion-quickstart> java -Xmx5M -verbose:gc -jar dist/wc.jar dist/sample
 time: 0.106 sec
 ```
 
-## Description
-
-The processing is described [here](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/WordCounter.java)
-
-The Fluxtion generated Static Event Processor is [here](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/generated/WcProcessor.java) 
+## Development Description
 
 To build the Fluxtion wc from scratch the developer follows the four steps below:
-- Step 1 Create events and processors
-- Step 2 describe the graph 
-- Step 3 Run the Fluxtion maven plugin to generate the event processor
-- Step 4 Integrate the generated processor into the application
+1. Code [event](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/CharEvent.java) 
+and [processor](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/WordCounter.java). Annotation are used to declare event handling methods
+2. Describe the graph with an annotated builder method
+3. Run the Fluxtion maven plugin to generate the [event processor](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/generated/WcProcessor.java) 
+4. Integrate the generated processor into the [application](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/Main.java)
+
