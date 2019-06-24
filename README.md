@@ -38,14 +38,14 @@ time: 0.106 sec
 
 To build the Fluxtion wc from scratch a developer follows the five steps below:
 
-1. Create a maven based application and add the Fluxtion build plugin.
+1. Create a maven based application and add the [Fluxtion maven build plugin](https://github.com/v12technology/fluxtion-mavenplugin) to the pom.
 1. Code an application [event](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/CharEvent.java) that extends [Event](https://github.com/v12technology/fluxtion/blob/master/api/src/main/java/com/fluxtion/api/event/Event.java)
 and a [processor](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/WordCounter.java) that will handle the incoming events. 
 Event handling methods in the processor are marked with the [@EventHandler](https://github.com/v12technology/fluxtion/blob/master/api/src/main/java/com/fluxtion/api/annotations/EventHandler.java) annotation.
-2. Describe the graph construction imperatively in a method marked with a [@SepBuilder](https://github.com/v12technology/fluxtion/blob/master/builder/src/main/java/com/fluxtion/builder/annotation/SepBuilder.java) 
+1. Describe the graph construction imperatively in a method marked with a [@SepBuilder](https://github.com/v12technology/fluxtion/blob/master/builder/src/main/java/com/fluxtion/builder/annotation/SepBuilder.java) 
 annotation. The Fluxtion generator invokes the builder method as part of the maven build lifecycle.
-3. Run the Fluxtion [maven plugin](https://github.com/v12technology/fluxtion-quickstart/blob/master/pom.xml) to generate the [event processor](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/generated/WcProcessor.java) 
-4. Integrate the generated processor into the [application](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/Main.java)
+1. Run the Fluxtion [maven plugin](https://github.com/v12technology/fluxtion-quickstart/blob/master/pom.xml) to generate the [event processor](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/generated/WcProcessor.java) 
+1. Integrate the generated processor into the [application](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/Main.java)
 
 ### Detailed description ###
 
@@ -222,6 +222,35 @@ public class WordCounter {
     }
 
 }
-
 ```
+
+### Step 3 describe graph ###
+Add nodes to a graph at build time in a method annotated with @SepBuilder by creating instances
+and add them to the supplied SepConfig instance. Package name, generated class name and output directory
+are controlled by the annotation parameters. There is no need to declare vertices and edges, Fluxtion
+carries out all the heavy lifting making the coders' life easier. 
+
+The graph description method:
+
+```java
+    @SepBuilder(name = "WcProcessor",
+            packageName = "com.fluxtion.sample.wordcount.generated",
+            outputDir = "src/main/java")
+    public void buildWcSep(SEPConfig cfg) {
+            cfg.addPublicNode(new WordCounter(), "result");
+            cfg.supportDirtyFiltering = false;
+    }
+```
+
+### Step 4 generate the static event processor ###
+
+Running the maven build will generate the [event stream processor](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/generated/WcProcessor.java) the application will integrate with.
+
+```bat
+C:\tmp> mvn install -P fluxtion
+```
+
+
+
+
  
