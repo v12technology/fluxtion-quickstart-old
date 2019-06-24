@@ -44,7 +44,7 @@ and a [processor](https://github.com/v12technology/fluxtion-quickstart/blob/mast
 Event handling methods in the processor are marked with the [@EventHandler](https://github.com/v12technology/fluxtion/blob/master/api/src/main/java/com/fluxtion/api/annotations/EventHandler.java) annotation.
 1. Describe the graph construction imperatively in a method marked with a [@SepBuilder](https://github.com/v12technology/fluxtion/blob/master/builder/src/main/java/com/fluxtion/builder/annotation/SepBuilder.java) 
 annotation. The Fluxtion generator invokes the builder method as part of the maven build lifecycle.
-1. Run the Fluxtion [maven plugin](https://github.com/v12technology/fluxtion-quickstart/blob/master/pom.xml) to generate the [event processor](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/generated/WcProcessor.java) 
+1. Run the Fluxtion [maven plugin](https://github.com/v12technology/fluxtion-mavenplugin) to generate the [event processor](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/generated/WcProcessor.java) 
 1. Integrate the generated processor into the [application](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/Main.java)
 
 ### Detailed description ###
@@ -123,7 +123,8 @@ dependencies on external libraries making integration a simple task.
 
 Define an event, CharEvent, that the application will process by extending the Fluxtion base class 
 [Event](api/src/main/java/com/fluxtion/runtime/event/Event.java). The optional 
-filter value of the event is set to the value of the char. This is the event the application will create and feed into the Fluxtion generated SEP.
+filter value of the event is set to the value of the char. This is the event the application will create and feed into the Fluxtion generated SEP
+for every character in the file to analyse.
 
 A user written event handler class(WordCounter) receives CharEvents and maintains a set of stateful calculations for chars, words and lines. 
 The ```@EventHandler``` annotation attached to a single argument method, marks the method as an entry point for processing. 
@@ -263,8 +264,8 @@ will handle all initialisation, lifecycle and event dispatch for managed nodes.
 
 The generated SEP is the same as any normal java class, it implements the following interfaces:
 
-* [Lifecycle](https://github.com/v12technology/fluxtion/blob/master/api/src/main/java/com/fluxtion/api/lifecycle/Lifecycle.java) - call init and teardown to signify start and stop the processor
-* [EventHandler](https://github.com/v12technology/fluxtion/blob/master/api/src/main/java/com/fluxtion/api/lifecycle/EventHandler.java) - call onEvent with any Event and the SEP will handle all dispatching.
+* [Lifecycle](https://github.com/v12technology/fluxtion/blob/master/api/src/main/java/com/fluxtion/api/lifecycle/Lifecycle.java) - call init and teardown to notify starting and stopping the processor
+* [EventHandler](https://github.com/v12technology/fluxtion/blob/master/api/src/main/java/com/fluxtion/api/lifecycle/EventHandler.java) - call onEvent with any Event, the SEP will handle all dispatching.
 
  The develper creates an instance of the SEP, calls init() then pushes events with onEvent and finally shuts down with tearDown().
 
