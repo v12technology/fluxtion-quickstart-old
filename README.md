@@ -40,7 +40,7 @@ To build the Fluxtion wc from scratch a developer follows the four steps below:
 
 1. Code an application [event](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/CharEvent.java) that extends [Event](https://github.com/v12technology/fluxtion/blob/master/api/src/main/java/com/fluxtion/api/event/Event.java)
 and a [processor](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/WordCounter.java) that will handle the incoming events. 
-Annotation are used to declare event handling methods in the processor with @EventHandler
+Event handling methods in the processor ar marked with the @EventHandler annotation.
 2. Describe the graph with an @SepBuilder annotated builder method
 3. Run the Fluxtion [maven plugin](https://github.com/v12technology/fluxtion-quickstart/blob/master/pom.xml) to generate the [event processor](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/generated/WcProcessor.java) 
 4. Integrate the generated processor into the [application](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/Main.java)
