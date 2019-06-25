@@ -91,7 +91,6 @@ public class WordCounter {
             outputDir = "src/main/java")
     public void buildWcSep(SEPConfig cfg) {
             cfg.addPublicNode(new WordCounter(), "result");
-            cfg.supportDirtyFiltering = false;
     }
 
 }

@@ -74,7 +74,7 @@ dependencies on external libraries making integration a simple task.
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <fluxtion.ver>1.7.23</fluxtion.ver>
+        <fluxtion.ver>1.7.25</fluxtion.ver>
     </properties>
 
     <profiles>
@@ -121,7 +121,7 @@ dependencies on external libraries making integration a simple task.
 
 #### Step 2 events and processors ####
 
-Define an event, CharEvent, that the application will process by extending the Fluxtion base class 
+Define an event, CharEvent, that extends the Fluxtion base class 
 [Event](api/src/main/java/com/fluxtion/runtime/event/Event.java). The optional 
 filter value of the event is set to the value of the char. This is the event the application will create and feed into the Fluxtion generated SEP
 for every character in the file to analyse.
@@ -131,7 +131,7 @@ The ```@EventHandler``` annotation attached to a single argument method, marks t
 Some of the methods are marked with a filter value ```@EventHandler(filterId = '\t')``` signifying 
 the methods are only invoked when the Event and the filter value of the event match.
 
-A method is marked with the ```@TtearDown``` annotation and will be invoked when teardown is called on the generated static event processor.
+A method is marked with the ```@TearDown``` annotation and will be invoked when teardown is called on the generated static event processor.
  
 **[CharEvent:](https://github.com/v12technology/fluxtion-quickstart/blob/master/src/main/java/com/fluxtion/sample/wordcount/CharEvent.java)** 
 
@@ -223,16 +223,15 @@ public class WordCounter {
             outputDir = "src/main/java")
     public void buildWcSep(SEPConfig cfg) {
             cfg.addPublicNode(new WordCounter(), "result");
-            cfg.supportDirtyFiltering = false;
     }
 
 }
 ```
 
 ### Step 3 describe graph ###
-Add nodes to a graph at build time in a method annotated with ```@SepBuilder``` by creating instances
-and adding them to the supplied [SepConfig](https://github.com/v12technology/fluxtion/blob/master/builder/src/main/java/com/fluxtion/builder/node/SEPConfig.java) 
-instance. Package name, generated class name and output directory
+Add nodes to a graph at build time in a method annotated with ```@SepBuilder```. Create an instance of WordCounter class
+and add it to the supplied [SepConfig](https://github.com/v12technology/fluxtion/blob/master/builder/src/main/java/com/fluxtion/builder/node/SEPConfig.java) 
+instance with the addPublicNode method. Package name, generated class name and output directory
 are controlled by annotation parameters. There is no need to declare vertices and edges, Fluxtion
 carries out all the heavy lifting and calculates the graph structure making the coders' life easier. 
 
@@ -244,7 +243,6 @@ The graph description method:
             outputDir = "src/main/java")
     public void buildWcSep(SEPConfig cfg) {
             cfg.addPublicNode(new WordCounter(), "result");
-            cfg.supportDirtyFiltering = false;
     }
 ```
 
@@ -264,10 +262,12 @@ will handle all initialisation, lifecycle and event dispatch for managed nodes.
 
 The generated SEP is the same as any normal java class, it implements the following interfaces:
 
-* [Lifecycle](https://github.com/v12technology/fluxtion/blob/master/api/src/main/java/com/fluxtion/api/lifecycle/Lifecycle.java) - call init and teardown to notify starting and stopping the processor
-* [EventHandler](https://github.com/v12technology/fluxtion/blob/master/api/src/main/java/com/fluxtion/api/lifecycle/EventHandler.java) - call onEvent with any Event, the SEP will handle all dispatching.
+* [Lifecycle](https://github.com/v12technology/fluxtion/blob/master/api/src/main/java/com/fluxtion/api/lifecycle/Lifecycle.java) - 
+call init and teardown methods to notify starting and stopping the processor
+* [EventHandler](https://github.com/v12technology/fluxtion/blob/master/api/src/main/java/com/fluxtion/api/lifecycle/EventHandler.java) - 
+call onEvent method with an Event, the SEP will handle all dispatching.
 
- The develper creates an instance of the SEP, calls init() then pushes events with onEvent and finally shuts down with tearDown().
+ The developer creates an instance of the SEP, calls init() then pushes events with onEvent and finally shuts down with tearDown().
 
 ```java
 
