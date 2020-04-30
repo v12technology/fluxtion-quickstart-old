@@ -20,7 +20,7 @@
             <artifactId>fluxtion-text-builder</artifactId>
             <version>${fluxtion.ver}</version>
         </dependency>
-       <dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.12</version>

@@ -36,30 +36,31 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * An example to demonstrate a mixture of Fluxtion functionality. The Fluxtion
- * event processor provides the behaviour:
+ * An example to demonstrate a mixture of Fluxtion functionality from CSV
+ * marshalling to window based calculations. The generated stream processor
+ * provides the behaviour:
  * <ul>
  * <li>Read room sensor temperature events as a csv character stream or instance
  * SensorReading events
  * <li>For each room calculate the max and average temperature individually
  * <li>Run a tumbling window, zeroing all room values every 3 readings
- * <li>Register an SMS number with the controller by sending a String
+ * <li>Register a user class as an instance in the processor to act as a controller
  * <li>If a room has an average of > 60 and max of >90 then:
  * <ul>
  * <li>log a warning
  * <li>A user class(TempertureController) will send an SMS of rooms to
  * investigate if an SMS number is registered
  * </ul>
+ * <li>Register an SMS endpoint with ith the controller by sending a String as an event
  * </ul>
- * <li>Register an SMS endpoint with a user supplied via an event
  * <p>
  *
  * The example demonstrates:
  * <ul>
- * <li>Processing an infinite stream
+ * <li>Processing an infinite stream of herogeneous event types
  * <li>Type safe construction using method references
  * <li>Auto generation of CSV marshaller
- * <li>Merging events of the same type into a single stream
+ * <li>Merging events of the same type from different source into a single stream
  * <li>Handling heterogeneous event types, each with their own execution path
  * <li>GroupBy calculating derived data
  * <li>Tumbling windows operating on Grouped data, resetting state based on
@@ -72,11 +73,17 @@ import lombok.NoArgsConstructor;
  * <li>Sending data events to a user instance via onEvent
  * <li>Propagating updates only when tests are valid
  * <li>Pushing data to a user instance, removing the pull from user code.
- * <li>No specific class to inherit from as an input Event
+ * <li>Any class can act as an input event, even a java.lang.String
  * <li>Mixing of imperative and declarative code
  * <li>Translation of reference to primitive types with no allocations
  * <li>Generating of the processor as Java code, cached for use.
- * <ul>
+ * </ul>
+ *
+ * For the first run Fluxtion generates the static event processor in:
+ * [project_roo]\target\generated-sources\fluxtion, subsequent runs will use
+ * the cached processor. An image representing the processing graph can be found
+ * in the [project_roo]\src\main\resources\com\fluxtion\quickstart\roomsensor\generated folder
+ * 
  *
  * @author Greg Higgins greg.higgins@v12technology.com
  */
@@ -105,6 +112,7 @@ public class SensorMonitor {
         processor.onEvent(new SensorReading("living", 56));
     }
 
+    @SuppressWarnings({"unchecked", "varargs"})
     public static void buildSensorProcessor(SEPConfig cfg) {
         //merge csv marshller and SensorReading instance events
         Wrapper<SensorReading> sensorData = merge(select(SensorReading.class),
