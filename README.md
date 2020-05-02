@@ -1,9 +1,9 @@
 # Introduction
-5 Minute quick tutorial that demonstrates processing streaming data using Fluxtion. 
+5 Minute tutorial to demonstrate processing of streaming data using Fluxtion. 
 The goal is to read sensor data for a set of rooms, calculate aggregate values per room and 
 notify a user class when a room breaches set criteria.
 ## Requirements
- - Read room sensor temperature as a csv character stream or instances of SensorReading events. 
+ - Read room sensor temperature as a csv character stream or as instances of SensorReading events. 
  - Merge csv and SensorReading's into a single event stream for processing
  - The event stream can be infinite
  - For each room calculate the max and average temperature
@@ -17,6 +17,8 @@ notify a user class when a room breaches set criteria.
 Clone the application
 Execute the sensorquickstart.jar
 ```bat
+git clone https://github.com/v12technology/fluxtion-quickstart.git
+cd 
 java  -Dfluxtion.cacheDirectory=fluxtion -jar dist\sensorquickstart.jar
 21:40:45.991 [main] INFO  c.f.generator.compiler.SepCompiler - generated sep: C:\Users\gregp\development\projects\fluxtion\open-source\quickstart\fluxtion\source\com\fluxtion\quickstart\roomsensor\generated\RoomSensorSEP.java
  ->     bathroom:45
