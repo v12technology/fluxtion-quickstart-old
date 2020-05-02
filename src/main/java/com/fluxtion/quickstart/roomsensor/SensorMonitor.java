@@ -26,9 +26,10 @@ import com.fluxtion.ext.streaming.api.group.GroupBy;
 import static com.fluxtion.ext.streaming.builder.factory.EventSelect.select;
 import static com.fluxtion.ext.streaming.builder.factory.WindowBuilder.tumble;
 import static com.fluxtion.ext.streaming.builder.group.Group.groupBy;
+import com.fluxtion.ext.text.api.util.CharStreamer;
 import static com.fluxtion.ext.text.builder.csv.CsvMarshallerBuilder.csvMarshaller;
-import static com.fluxtion.ext.text.builder.util.StringDriver.streamChars;
 import static com.fluxtion.generator.compiler.InprocessSepCompiler.reuseOrBuild;
+import java.io.File;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
@@ -89,23 +90,9 @@ import lombok.NoArgsConstructor;
  */
 public class SensorMonitor {
 
-    public static String SENSOR_DATA = "sensorName,value\n"
-            + "bathroom,45\n"
-            + "living,78\n"
-            + "bed,43\n"
-            + "bed,23\n"
-            + "bathroom,19\n"
-            + "bed,34\n"
-            + "living,89\n"
-            + "bed,23\n"
-            + "living,44\n"
-            + "living,36\n"
-            + "living,99\n"
-            + "living,56\n";
-
     public static void main(String[] args) throws Exception {
         StaticEventProcessor processor = reuseOrBuild("RoomSensorSEP", "com.fluxtion.quickstart.roomsensor.generated", SensorMonitor::buildSensorProcessor);
-        streamChars(SENSOR_DATA, processor, false);
+        CharStreamer.stream(new File("temperatureData.csv"), processor).sync().stream();
         processor.onEvent("0800-1-HELP-ROOMTEMP");
         processor.onEvent(new SensorReading("living", 36));
         processor.onEvent(new SensorReading("living", 99));
@@ -125,8 +112,7 @@ public class SensorMonitor {
                 .build();
         //tumble window (count=3), warning if avg > 60 && max > 90 in the window for a sensor
         tumble(sensors, 3).console("readings in window : ", GroupBy::collection)
-                .get(GroupBy::collection)
-                .map(SensorMonitor::warningSensors)
+                .map(SensorMonitor::warningSensors, GroupBy::collection)
                 .filter(c -> c.size() > 0)
                 .console("**** WARNING **** sensors to investigate:")
                 .push(new TempertureController()::investigateSensors);
@@ -153,7 +139,7 @@ public class SensorMonitor {
 
         @EventHandler
         public void setSmsDetails(String details) {
-            System.out.println("registering sms details:" + details);
+            System.out.println("Temp controller registering sms details:" + details);
             this.smsDetails = details;
         }
     }
@@ -181,9 +167,7 @@ public class SensorMonitor {
 
         @Override
         public String toString() {
-            return sensorName
-                    + "  max:" + max
-                    + " average:" + average;
+            return "(" + sensorName + "  max:" + max + " average:" + average + ")";
         }
     }
 

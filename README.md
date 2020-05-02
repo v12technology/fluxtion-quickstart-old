@@ -143,6 +143,7 @@ public class CharEvent extends Event{
     public CharEvent(char id) {
         super(ID, id);
         filterId = id;
+
     }
 
     public char getCharacter() {
