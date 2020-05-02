@@ -1,11 +1,14 @@
 # Introduction
-5 Minute quick tutorial that demonstrates processing streaming data using Fluxtion. The goal is to read sensor data for a set of rooms, calculate aggregate values per room and notify a user class when a room breaches set criteria.
+5 Minute quick tutorial that demonstrates processing streaming data using Fluxtion. 
+The goal is to read sensor data for a set of rooms, calculate aggregate values per room and 
+notify a user class when a room breaches set criteria.
 ## Requirements
- - Read room sensor temperature events as a csv character stream or instances of SensorReading. Merge into a single event stream for processing
+ - Read room sensor temperature as a csv character stream or instances of SensorReading events. 
+ - Merge csv and SensorReading's into a single event stream for processing
  - The event stream can be infinite
- -  For each room calculate the max and average    temperature
+ - For each room calculate the max and average temperature
  - Run a tumbling window, zeroing all room values every 3 readings
- - Register a user class in the processor to act as a controller of an external system
+ - Register a user class with the stream processor to act as a controller of an external system
  - If a room has an average of > 60 and max of > 90 then
 	 - Log a warning
 	 - A user class(TempertureController) will attempt to send an SMS listing rooms to investigate
