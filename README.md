@@ -18,9 +18,9 @@ Clone the application
 Execute the sensorquickstart.jar
 ```bat
 git clone https://github.com/v12technology/fluxtion-quickstart.git
-cd 
+cd fluxrtion-quickstart
 java  -Dfluxtion.cacheDirectory=fluxtion -jar dist\sensorquickstart.jar
-21:40:45.991 [main] INFO  c.f.generator.compiler.SepCompiler - generated sep: C:\Users\gregp\development\projects\fluxtion\open-source\quickstart\fluxtion\source\com\fluxtion\quickstart\roomsensor\generated\RoomSensorSEP.java
+21:40:45.991 [main] INFO  c.f.generator.compiler.SepCompiler - generated sep: C:\quickstart\fluxtion\source\com\fluxtion\quickstart\roomsensor\generated\RoomSensorSEP.java
  ->     bathroom:45
  ->     living:78
  ->     bed:43
