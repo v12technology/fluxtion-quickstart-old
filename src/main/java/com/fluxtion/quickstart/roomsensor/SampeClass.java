@@ -10,5 +10,5 @@ package com.fluxtion.quickstart.roomsensor;
  * @author gregp
  */
 public class SampeClass {
-    String testCache = "";
+    String testCache_2 = "";
 }
