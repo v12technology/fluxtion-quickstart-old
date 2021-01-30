@@ -27,11 +27,16 @@ jobs:
       - name: Build project with Maven
         run: mvn -B package --file pom.xml
 
-  cache_mvn:
-    runs-on: ubuntu-latest  
-    steps:
-      - name: Build project with Maven
-        run: mvn -B package --file pom.xml
+      - name: Cache the Maven packages to speed up build
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2  
+
+#  cache_mvn:
+#    runs-on: ubuntu-latest  
+#    steps:
       
 #    steps:
 #    - uses: actions/checkout@v2
