@@ -13,3 +13,4 @@ buildNumber.properties
 /dist/sample/local/
 /nbactions.xml
 /fluxtion/
+/nbproject/

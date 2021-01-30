@@ -5,10 +5,19 @@
  */
 package com.fluxtion.quickstart.roomsensor;
 
+import static org.hamcrest.CoreMatchers.is;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
 /**
  *
  * @author gregp
  */
-public class SampeClass {
-    String testCache = "";
+public class SimpleTest {
+    
+
+     @Test
+     public void hello() {
+         assertThat(1, is(2));
+     }
 }
