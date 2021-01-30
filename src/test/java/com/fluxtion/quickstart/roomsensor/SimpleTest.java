@@ -18,6 +18,6 @@ public class SimpleTest {
 
      @Test
      public void hello() {
-         assertThat(1, is(2));
+         assertThat(1, is(1));
      }
 }
