@@ -28,6 +28,7 @@ jobs:
         run: mvn -B package --file pom.xml
 
   cache_mvn:
+    runs-on: ubuntu-latest  
     steps:
       - name: Build project with Maven
         run: mvn -B package --file pom.xml
