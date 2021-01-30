@@ -13,20 +13,35 @@ jobs:
   build_and_test:
       
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        # test against latest update of each major Java version, as well as specific updates of LTS versions:
+        java: [ 8, 11, 15]
+    name: Java ${{ matrix.java }} sample
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up JDK 14
-      uses: actions/setup-java@v1
-      with:
-        java-version: 14
+      - uses: actions/checkout@v2
+      - name: Setup java ${{ matrix.java }}
+        uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.java }}
+      - name: Build project with Maven
+        run: mvn -B package --file pom.xml
 
-    - name: Cache the Maven packages to speed up build
-      uses: actions/cache@v1
-      with:
-        path: ~/.m2
-        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-        restore-keys: ${{ runner.os }}-m2  
-        
+  cache_mvn:
     - name: Build project with Maven
       run: mvn -B package --file pom.xml
+      
+#    steps:
+#    - uses: actions/checkout@v2
+#    - name: Set up JDK 14
+#      uses: actions/setup-java@v1
+#      with:
+#        java-version: 14
+
+#    - name: Cache the Maven packages to speed up build
+#      uses: actions/cache@v1
+#      with:
+#        path: ~/.m2
+#        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+#        restore-keys: ${{ runner.os }}-m2  
+        
