@@ -28,8 +28,9 @@ jobs:
         run: mvn -B package --file pom.xml
 
   cache_mvn:
-    - name: Build project with Maven
-      run: mvn -B package --file pom.xml
+    steps:
+      - name: Build project with Maven
+        run: mvn -B package --file pom.xml
       
 #    steps:
 #    - uses: actions/checkout@v2
