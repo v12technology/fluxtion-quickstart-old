@@ -45,6 +45,9 @@
         </dependency>
     </dependencies>
 
+    <scm>
+        <connection>scm:git:https://gregv12@github.com/v12technology/fluxtion-quickstart-old.git</connection>
+    </scm>
     <build>
         <plugins>
             <plugin>
