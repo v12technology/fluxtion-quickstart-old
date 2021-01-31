@@ -12,6 +12,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <fluxtion.ver>2.5.1</fluxtion.ver>
+        <pushReleases>true</pushReleases>
     </properties>
 
     <dependencies>
@@ -58,7 +59,7 @@
                     <noDeploy>true</noDeploy>
                     <username>${fluxtion.github.user}</username>
                     <password>${fluxtion.github.password}</password>
-                    <pushReleases>true</pushReleases>
+                    <pushReleases>${pushReleases}</pushReleases>
                     <!--<useReleaseProfile>false</useReleaseProfile>-->
                     <!--<noTag>true</noTag>-->
                     <autoVersionSubmodules>true</autoVersionSubmodules>
