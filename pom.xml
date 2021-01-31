@@ -58,6 +58,7 @@
                     <noDeploy>true</noDeploy>
                     <username>${fluxtion.github.user}</username>
                     <password>${fluxtion.github.password}</password>
+                    <pushReleases>true</pushReleases>
                     <!--<useReleaseProfile>false</useReleaseProfile>-->
                     <!--<noTag>true</noTag>-->
                     <autoVersionSubmodules>true</autoVersionSubmodules>
