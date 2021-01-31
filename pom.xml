@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.fluxtion.quickstart</groupId>
     <artifactId>roomsensor</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
     <name>fluxtion.quickstart :: roomsensor-old</name>
 	
@@ -45,7 +45,32 @@
         </dependency>
     </dependencies>
 
+    <scm>
+        <connection>scm:git:https://gregv12@github.com/v12technology/fluxtion-quickstart-old.git</connection>
+    </scm>
     <build>
+        <plugins>
+            <plugin>
+                <groupId>external.atlassian.jgitflow</groupId>
+                <artifactId>jgitflow-maven-plugin</artifactId>
+                <version>1.0-m5.1</version>
+                <configuration>
+                    <noDeploy>true</noDeploy>
+                    <username>${fluxtion.github.user}</username>
+                    <password>${fluxtion.github.password}</password>
+                    <!--<useReleaseProfile>false</useReleaseProfile>-->
+                    <!--<noTag>true</noTag>-->
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+<!--                    <releaseVersion>${next.release.version}</releaseVersion>
+                    <developmentVersion>${next.development.version}</developmentVersion>-->
+                    <!--<allowSnapshots>true</allowSnapshots>-->
+                    <!-- see goals wiki page for configuration options -->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>   
+
+<!--    <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -59,7 +84,7 @@
                         <id>shade</id>
                         <configuration>
                             <outputFile>dist\sensorquickstart.jar</outputFile>
-                            <!--<minimizeJar>true</minimizeJar>-->
+                            <minimizeJar>true</minimizeJar>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <manifestEntries>
@@ -73,6 +98,6 @@
                 </executions>
             </plugin>
         </plugins>
-    </build>
+    </build>-->
 
 </project>
