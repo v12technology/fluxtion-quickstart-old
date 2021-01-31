@@ -48,6 +48,28 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>external.atlassian.jgitflow</groupId>
+                <artifactId>jgitflow-maven-plugin</artifactId>
+                <version>1.0-m5.1</version>
+                <configuration>
+                    <noDeploy>true</noDeploy>
+                    <username>${fluxtion.github.user}</username>
+                    <password>${fluxtion.github.password}</password>
+                    <!--<useReleaseProfile>false</useReleaseProfile>-->
+                    <!--<noTag>true</noTag>-->
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+<!--                    <releaseVersion>${next.release.version}</releaseVersion>
+                    <developmentVersion>${next.development.version}</developmentVersion>-->
+                    <!--<allowSnapshots>true</allowSnapshots>-->
+                    <!-- see goals wiki page for configuration options -->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>   
+
+<!--    <build>
+        <plugins>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>2.4.1</version>
@@ -59,7 +81,7 @@
                         <id>shade</id>
                         <configuration>
                             <outputFile>dist\sensorquickstart.jar</outputFile>
-                            <!--<minimizeJar>true</minimizeJar>-->
+                            <minimizeJar>true</minimizeJar>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <manifestEntries>
@@ -73,6 +95,6 @@
                 </executions>
             </plugin>
         </plugins>
-    </build>
+    </build>-->
 
 </project>
