@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.fluxtion.quickstart</groupId>
     <artifactId>roomsensor</artifactId>
-    <version>1.0.5</version>
+    <version>1.0.6-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>fluxtion.quickstart :: roomsensor-old</name>
 	
